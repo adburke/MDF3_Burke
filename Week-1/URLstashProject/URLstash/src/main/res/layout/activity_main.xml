@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/gplaypatter_repeating"
+    tools:context=".URLstash"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal" >
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="http://"/>
+
+        <EditText
+            android:id="@+id/urlEditText"
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:singleLine = "true" />
+        <Button
+            android:id="@+id/goBtn"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/go_btn" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/viewStashBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Stash" />
+        <Button
+            android:id="@+id/addStashBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Add to Stash" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

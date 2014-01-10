@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Project:		Java2_p1
+  ~
+  ~ Package:		Java2_p1
+  ~
+  ~ Author:		Aaron Burke
+  ~
+  ~ Date:		12/5/2013
+  -->
+
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/gplaypattern"
+    android:tileMode="repeat" />
