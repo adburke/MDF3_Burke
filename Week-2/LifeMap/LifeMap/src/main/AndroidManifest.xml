@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lifemap"
-    android:versionCode="1"
-    android:versionName="1.0"
-    android:name="com.example.lifemap.maps.permission.MAPS_RECEIVE"
-    android:protectionLevel="signature" >
-
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="19" />
+    android:name="com.example.lifemap.maps.permission.MAPS_RECEIVE" >
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature

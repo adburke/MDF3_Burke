@@ -6,30 +6,31 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.os.Build;
 import android.widget.Button;
-
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 
 public class MainDisplayActivity extends ActionBarActivity implements LocationListener, View.OnClickListener {
 
@@ -54,7 +55,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     private static final int CAPTURE_IMAGE_REQ_CODE = 100;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    private Uri mediaUri;
+    Uri mediaUri;
 
 
     @Override
@@ -100,7 +101,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_display, menu);
         return true;
@@ -212,3 +213,4 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         }
     }
 }
+
