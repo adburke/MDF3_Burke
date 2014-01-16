@@ -7,24 +7,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
@@ -209,8 +205,14 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         if (requestCode == CAPTURE_IMAGE_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 Log.i("MainDisplayActivity", "Picture saved!");
+                createNewMarker();
             }
         }
+    }
+
+    public void createNewMarker() {
+        CapturedEvent newEvent = new CapturedEvent("Testing", mediaUri, currentLatLng);
+        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
     }
 }
 
