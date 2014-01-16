@@ -43,6 +43,10 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     Context mContext;
 
+    // Keep up with initial zoom of the map
+    // Prevents it from firing after the first run
+    Boolean appHasZoomed;
+
     // UI variables
     Button captureBtn;
 
@@ -59,6 +63,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         setContentView(R.layout.activity_main);
 
         mContext = this;
+        appHasZoomed = false;
 
         captureBtn = (Button) findViewById(R.id.captureBtn);
         captureBtn.setOnClickListener(this);
@@ -122,10 +127,12 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         // because location could become stale
         if (location != null) {
             currentLocation = location;
-            currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+            if (!appHasZoomed) {
+                currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+            }
         }
-
+        appHasZoomed = true;
     }
 
     @Override
