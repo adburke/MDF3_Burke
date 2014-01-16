@@ -19,8 +19,10 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 
 import java.io.File;
@@ -37,6 +39,8 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     // Location variables
     Location currentLocation;
     LocationManager locManager;
+    LatLng currentLatLng;
+
     Context mContext;
 
     // UI variables
@@ -57,6 +61,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         mContext = this;
 
         captureBtn = (Button) findViewById(R.id.captureBtn);
+        captureBtn.setOnClickListener(this);
 
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         gMap.setMyLocationEnabled(true);
@@ -79,7 +84,9 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
             locManager.requestLocationUpdates(provider, 15*1000, 0, this);
         }
 
-        
+
+
+
         //Log.i("MainDisplayActivity", "Location: " );
 
 
@@ -115,6 +122,8 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         // because location could become stale
         if (location != null) {
             currentLocation = location;
+            currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
 
     }
@@ -137,9 +146,11 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     @Override
     public void onClick(View v) {
         if (v.equals(captureBtn)) {
+            Log.i("MainDisplayActivity", "Capture btn clicked.");
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             mediaUri = getOutputFileUri(MEDIA_TYPE_IMAGE);
             if (mediaUri != null) {
+                Log.i("MainDisplayActivity", "Picture Location: " + mediaUri.toString() );
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mediaUri);
                 startActivityForResult(intent, CAPTURE_IMAGE_REQ_CODE);
             }
