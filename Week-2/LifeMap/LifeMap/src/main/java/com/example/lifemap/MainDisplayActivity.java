@@ -141,6 +141,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
             mediaUri = getOutputFileUri(MEDIA_TYPE_IMAGE);
             if (mediaUri != null) {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mediaUri);
+                startActivityForResult(intent, CAPTURE_IMAGE_REQ_CODE);
             }
         }
     }
