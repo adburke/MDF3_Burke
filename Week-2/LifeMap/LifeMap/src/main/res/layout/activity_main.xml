@@ -7,6 +7,11 @@
     tools:context=".MainDisplayActivity"
     tools:ignore="MergeRootFrame" >
 
+    <Button
+        android:id="@+id/captureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Capture the Moment"/>
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_width="match_parent"
