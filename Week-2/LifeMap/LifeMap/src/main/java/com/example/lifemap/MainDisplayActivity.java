@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -83,52 +84,65 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mContext = this;
-        appHasZoomed = false;
 
-        readyToSave = false;
+        Boolean status = ConnectionStatus.getNetworkStatus(mContext);
+        if (status) {
+            Log.i("MainDisplayActivity", "Connection Found!");
+            Toast toast = Toast.makeText(mContext, "Internet Connection established!", 15);
+            toast.show();
 
-        captureBtn = (Button) findViewById(R.id.captureBtn);
-        captureBtn.setOnClickListener(this);
+            appHasZoomed = false;
 
-        // Configure the Google Map
-        gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        gMap.setMyLocationEnabled(true);
-        gMap.setOnMarkerClickListener(this);
+            readyToSave = false;
 
-        Bundle incomingData = getIntent().getExtras();
-        if (incomingData != null) {
-            if (incomingData.getBoolean("saved")) {
-                Log.i("MainDisplayActivity", "File saved add marker.");
-                caption = (incomingData.getString("comment"));
-                savedUri = Uri.parse(incomingData.getString("uri"));
-                readyToSave = true;
-            } else if (!incomingData.getBoolean("saved")) {
-                Log.i("MainDisplayActivity", "File deleted.");
+            captureBtn = (Button) findViewById(R.id.captureBtn);
+            captureBtn.setOnClickListener(this);
+
+            // Configure the Google Map
+            gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            gMap.setMyLocationEnabled(true);
+            gMap.setOnMarkerClickListener(this);
+
+            Bundle incomingData = getIntent().getExtras();
+            if (incomingData != null) {
+                if (incomingData.getBoolean("saved")) {
+                    Log.i("MainDisplayActivity", "File saved add marker.");
+                    caption = (incomingData.getString("comment"));
+                    savedUri = Uri.parse(incomingData.getString("uri"));
+                    readyToSave = true;
+                } else if (!incomingData.getBoolean("saved")) {
+                    Log.i("MainDisplayActivity", "File deleted.");
+                }
             }
-        }
 
-        // Initialize a Location Manager
-        locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            // Initialize a Location Manager
+            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        // Create just a default criteria object
-        Criteria criteria = new Criteria();
+            // Create just a default criteria object
+            Criteria criteria = new Criteria();
 
-        // Check for LocationManager validity and start listening for updates
-        if (locManager == null) {
-            Log.i("MainDisplayActivity", "Location Manager is not available.");
+            // Check for LocationManager validity and start listening for updates
+            if (locManager == null) {
+                Log.i("MainDisplayActivity", "Location Manager is not available.");
+            } else {
+                List<String> providers = locManager.getAllProviders();
+                Log.i("MainDisplayActivity", "Providers: " + providers.toString());
+                String provider = locManager.getBestProvider(criteria, true);
+                // Poll at a rate of 15s and 0m moved in distance
+                // Would have to think about this per application for battery and how often
+                // location updates would be required
+                locManager.requestLocationUpdates(provider, 15*1000, 0, this);
+            }
+
         } else {
-            List<String> providers = locManager.getAllProviders();
-            Log.i("MainDisplayActivity", "Providers: " + providers.toString());
-            String provider = locManager.getBestProvider(criteria, true);
-            // Poll at a rate of 15s and 0m moved in distance
-            // Would have to think about this per application for battery and how often
-            // location updates would be required
-            locManager.requestLocationUpdates(provider, 15*1000, 0, this);
+            Log.i("MainDisplayActivity", "NO Connection Found!");
+            Toast toast = Toast.makeText(mContext, "NO Internet Connection found. The app requires it!", 15);
+            toast.show();
+            captureBtn.setEnabled(false);
         }
 
-        //Log.i("MainDisplayActivity", "Location: " );
+
 
 
     }
