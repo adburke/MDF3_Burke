@@ -53,6 +53,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     // Image capture variables
     private static final int CAPTURE_IMAGE_REQ_CODE = 100;
     public static final int MEDIA_TYPE_IMAGE = 1;
+    // Example use for video for future ref
     public static final int MEDIA_TYPE_VIDEO = 2;
     Uri mediaUri;
 
@@ -69,6 +70,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         captureBtn = (Button) findViewById(R.id.captureBtn);
         captureBtn.setOnClickListener(this);
 
+        // Configure the Google Map
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         gMap.setMyLocationEnabled(true);
         gMap.setOnMarkerClickListener(this);
@@ -79,6 +81,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         // Create just a default criteria object
         Criteria criteria = new Criteria();
 
+        // Check for LocationManager validity and start listening for updates
         if (locManager == null) {
             Log.i("MainDisplayActivity", "Location Manager is not available.");
         } else {
@@ -151,7 +154,10 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         if (requestCode == CAPTURE_IMAGE_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 Log.i("MainDisplayActivity", "Picture saved!");
-                createNewMarker();
+                //createNewMarker();
+                Intent stashViewActivity = new Intent(mContext, DisplayCaptureActivity.class);
+                stashViewActivity.putExtra("mediaUri", mediaUri.toString());
+                startActivityForResult(stashViewActivity, 0);
             }
         }
     }
@@ -173,9 +179,11 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     /* MY METHODS */
     /*------------*/
+
+    // Create a new marker and create a new object
     public void createNewMarker() {
-        CapturedEventItem newEvent = new CapturedEventItem("Testing", mediaUri, currentLatLng);
-        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
+//        CapturedEventItem newEvent = new CapturedEventItem("Testing", mediaUri, currentLatLng);
+//        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
     }
 
     // Return a file URI from the created output file name and location
