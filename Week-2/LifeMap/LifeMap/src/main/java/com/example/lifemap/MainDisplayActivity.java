@@ -251,12 +251,12 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     // Create a File for saving based on file type passed in
     private static File createOutputFile(int type) {
 
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "LifeMap");
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "lifemap");
 
         // Create the storage directory if it does not exist
         if (! storageDir.exists()) {
             if (! storageDir.mkdirs()) {
-                Log.i("LifeMap", "Failed in creating directory");
+                Log.i("lifemap", "Failed in creating directory");
                 // End method and return null
                 return null;
             }
