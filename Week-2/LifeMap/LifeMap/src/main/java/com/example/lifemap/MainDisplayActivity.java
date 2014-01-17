@@ -1,3 +1,15 @@
+/*
+ * Project:		LifeMap
+ *
+ * Package:		LifeMap-LifeMap
+ *
+ * Author:		aaronburke
+ *
+ * Purpose:     Main activity that display a google map with markers of captured events
+ *
+ * Date:		 	1 16, 2014
+ */
+
 package com.example.lifemap;
 
 import android.content.Context;
@@ -35,6 +47,11 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     // Google map
     GoogleMap gMap;
+    Marker newMarker;
+
+    CapturedEventItem newEvent;
+    String caption;
+    Boolean readyToSave;
 
     // Location variables
     Location currentLocation;
@@ -55,7 +72,9 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     public static final int MEDIA_TYPE_IMAGE = 1;
     // Example use for video for future ref
     public static final int MEDIA_TYPE_VIDEO = 2;
+    public static final int FILE_SAVE_REQ_CODE = 200;
     Uri mediaUri;
+    Uri savedUri;
 
 
     @Override
@@ -64,8 +83,11 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mContext = this;
         appHasZoomed = false;
+
+        readyToSave = false;
 
         captureBtn = (Button) findViewById(R.id.captureBtn);
         captureBtn.setOnClickListener(this);
@@ -74,6 +96,18 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         gMap.setMyLocationEnabled(true);
         gMap.setOnMarkerClickListener(this);
+
+        Bundle incomingData = getIntent().getExtras();
+        if (incomingData != null) {
+            if (incomingData.getBoolean("saved")) {
+                Log.i("MainDisplayActivity", "File saved add marker.");
+                caption = (incomingData.getString("comment"));
+                savedUri = Uri.parse(incomingData.getString("uri"));
+                readyToSave = true;
+            } else if (!incomingData.getBoolean("saved")) {
+                Log.i("MainDisplayActivity", "File deleted.");
+            }
+        }
 
         // Initialize a Location Manager
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -94,9 +128,6 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
             locManager.requestLocationUpdates(provider, 15*1000, 0, this);
         }
 
-
-
-
         //Log.i("MainDisplayActivity", "Location: " );
 
 
@@ -109,8 +140,13 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         // Update my current loc variable when onLocationChanged is called.
         // Dirty check to see if location is valid would need a more thorough check
         // because location could become stale
+
         if (location != null) {
             currentLocation = location;
+            if (readyToSave) {
+                currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                createNewMarker();
+            }
             if (!appHasZoomed) {
                 currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                 gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
@@ -153,27 +189,29 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                Log.i("MainDisplayActivity", "Picture saved!");
+                Log.i("MainDisplayActivity", "Captured Picture going to display activity");
                 //createNewMarker();
                 Intent stashViewActivity = new Intent(mContext, DisplayCaptureActivity.class);
                 stashViewActivity.putExtra("mediaUri", mediaUri.toString());
-                startActivityForResult(stashViewActivity, 0);
+                startActivityForResult(stashViewActivity, FILE_SAVE_REQ_CODE);
             }
         }
     }
 
+    // Display the marker picture
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // TODO Auto-generated method stub
         Log.i("MainDisplayActivity", "Marker Selected");
-//        if (marker.equals(myMarkerOne))
-//        {
-//            setContentView(R.layout.viewone);
-//        }
-//        else if (marker.equals(myMarkerTwo))
-//        {
-//            setContentView(R.layout.viewtwo);
-//        }
+        if (marker.equals(newMarker))
+        {
+            Intent stashViewActivity = new Intent(mContext, DisplayCaptureActivity.class);
+            stashViewActivity.putExtra("mediaUri", newEvent.fileLocation.toString());
+            stashViewActivity.putExtra("display", true);
+            stashViewActivity.putExtra("caption", newEvent.caption);
+            startActivityForResult(stashViewActivity, 0);
+        }
+
         return true;
     }
 
@@ -182,8 +220,8 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     // Create a new marker and create a new object
     public void createNewMarker() {
-//        CapturedEventItem newEvent = new CapturedEventItem("Testing", mediaUri, currentLatLng);
-//        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
+        newEvent = new CapturedEventItem(caption, savedUri, currentLatLng);
+        newMarker =  gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
     }
 
     // Return a file URI from the created output file name and location
