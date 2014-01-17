@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,13 +23,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.model.Marker;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class MainDisplayActivity extends ActionBarActivity implements LocationListener, View.OnClickListener {
+public class MainDisplayActivity extends ActionBarActivity implements LocationListener, View.OnClickListener, OnMarkerClickListener  {
 
     // Google map
     GoogleMap gMap;
@@ -56,6 +59,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -67,6 +71,7 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
 
         gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         gMap.setMyLocationEnabled(true);
+        gMap.setOnMarkerClickListener(this);
 
         // Initialize a Location Manager
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -92,27 +97,6 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         //Log.i("MainDisplayActivity", "Location: " );
 
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_display, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -160,6 +144,40 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
             }
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_REQ_CODE) {
+            if (resultCode == RESULT_OK) {
+                Log.i("MainDisplayActivity", "Picture saved!");
+                createNewMarker();
+            }
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        // TODO Auto-generated method stub
+        Log.i("MainDisplayActivity", "Marker Selected");
+//        if (marker.equals(myMarkerOne))
+//        {
+//            setContentView(R.layout.viewone);
+//        }
+//        else if (marker.equals(myMarkerTwo))
+//        {
+//            setContentView(R.layout.viewtwo);
+//        }
+        return true;
+    }
+
+    /* MY METHODS */
+    /*------------*/
+    public void createNewMarker() {
+        CapturedEventItem newEvent = new CapturedEventItem("Testing", mediaUri, currentLatLng);
+        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
+    }
+
     // Return a file URI from the created output file name and location
     private static Uri getOutputFileUri(int type) {
         File mediaFile = createOutputFile(type);
@@ -198,21 +216,6 @@ public class MainDisplayActivity extends ActionBarActivity implements LocationLi
         }
 
         return mediaFile;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_REQ_CODE) {
-            if (resultCode == RESULT_OK) {
-                Log.i("MainDisplayActivity", "Picture saved!");
-                createNewMarker();
-            }
-        }
-    }
-
-    public void createNewMarker() {
-        CapturedEvent newEvent = new CapturedEvent("Testing", mediaUri, currentLatLng);
-        gMap.addMarker(new MarkerOptions().position(newEvent.ePosition).title(newEvent.caption));
     }
 }
 
