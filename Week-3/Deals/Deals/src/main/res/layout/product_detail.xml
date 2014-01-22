@@ -1,0 +1,142 @@
+
+<!--
+  ~ Project:		Deals
+  ~
+  ~ Package:		Deals-Deals
+  ~
+  ~ Author:		aaronburke
+  ~
+  ~ Date:		 	1 21, 2014
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gplaypatter_repeating"
+    tools:context=".Product_detail"
+    tools:ignore="MergeRootFrame" >
+
+
+    <TextView
+        android:id="@+id/productDetailName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center">
+        <TableRow
+            android:id="@+id/detailTableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowVendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailVendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detailTableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detailTableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detailTableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowMpn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailMpn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detailTableRow6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowUpc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailUpc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detailTableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rowMfr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+            <TextView
+                android:id="@+id/productDetailMfr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/webLaunchBtn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="15sp"
+        />
+
+</LinearLayout>

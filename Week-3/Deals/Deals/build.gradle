@@ -1,0 +1,33 @@
+/*
+ * Project:		Deals
+ *
+ * Package:		Deals-Deals
+ *
+ * Author:		aaronburke
+ *
+ * Date:		 	1 21, 2014
+ */
+
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files ('libs/commons-codec-1.7.jar','libs/signpost-core-1.2.1.2.jar')
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Project:		Deals
+  ~
+  ~ Package:		Deals-Deals
+  ~
+  ~ Author:		aaronburke
+  ~
+  ~ Date:		 	1 21, 2014
+  -->
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/browser_fragment"
+    android:name="com.deals.app.BrowserFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</fragment>
