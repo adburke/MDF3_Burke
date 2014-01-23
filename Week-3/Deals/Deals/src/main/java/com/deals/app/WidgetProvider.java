@@ -80,6 +80,8 @@ public class WidgetProvider extends AppWidgetProvider {
             Intent clickIntent = new Intent(context, ProductListDetail.class);
             clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             clickIntent.putExtra("widget", true);
+            clickIntent.putExtra("filterString", MainActivity.selectionSpinner.getSelectedItem().toString());
+            clickIntent.putExtra("filterIndex", MainActivity.selectionSpinner.getSelectedItemPosition());
             clickIntent.setData(Uri.parse(clickIntent.toUri(Intent.URI_INTENT_SCHEME)));
             PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
             rv.setPendingIntentTemplate(R.id.stack_view, viewPendingIntent);

@@ -46,6 +46,10 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
                 int appWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
                 productIndex = getIntent().getIntExtra(WidgetProvider.EXTRA_ITEM, 0);
                 Log.i("ProductDetail", "Launched from widget! INDEX= " + productIndex);
+                filterIndex = incomingData.getInt("filterIndex");
+                Log.i("filterIndex", String.valueOf(filterIndex));
+                filterString = incomingData.getString("filterString");
+                Log.i("filterString", filterString);
             } else {
                 productIndex = incomingData.getInt("index");
                 Log.i("productIndex", String.valueOf(productIndex));
@@ -54,14 +58,14 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
                 filterString = incomingData.getString("filterString");
                 Log.i("filterString", filterString);
 
-                // Create URI for product call to capture data
-                if (filterIndex == 0) {
-                    productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex);
-                    productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex;
-                } else {
-                    productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex);
-                    productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex;
-                }
+            }
+            // Create URI for product call to capture data
+            if (filterIndex == 0) {
+                productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex);
+                productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex;
+            } else {
+                productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex);
+                productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex;
             }
 
         }
@@ -81,6 +85,11 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
             }
         } else if (savedInstanceState != null && !incomingData.getBoolean("widget")) {
             productUriString = savedInstanceState.getString("productUri");
+            productUri = Uri.parse(productUriString);
+            if (fragment != null) {
+                fragment.updateProductDetails(productUri);
+            }
+        } else if (incomingData.getBoolean("widget")) {
             productUri = Uri.parse(productUriString);
             if (fragment != null) {
                 fragment.updateProductDetails(productUri);
