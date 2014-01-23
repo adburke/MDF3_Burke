@@ -24,8 +24,9 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class WidgetProvider extends AppWidgetProvider {
-    public static final String TOAST_ACTION = "com.example.android.stackwidget.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.example.android.stackwidget.EXTRA_ITEM";
+    // Variable to detect first launch of app
+    private Boolean mlaunch = false;
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
@@ -44,13 +45,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-//        if (intent.getAction().equals(TOAST_ACTION)) {
-//            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-//                    AppWidgetManager.INVALID_APPWIDGET_ID);
-//            int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
-//            Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
-//        }
         super.onReceive(context, intent);
     }
 
@@ -80,14 +74,19 @@ public class WidgetProvider extends AppWidgetProvider {
             Intent clickIntent = new Intent(context, ProductListDetail.class);
             clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             clickIntent.putExtra("widget", true);
-            clickIntent.putExtra("filterString", MainActivity.selectionSpinner.getSelectedItem().toString());
-            clickIntent.putExtra("filterIndex", MainActivity.selectionSpinner.getSelectedItemPosition());
+            if (mlaunch) {
+                String filterString = MainActivity.selectionSpinner.getSelectedItem().toString();
+                int filterIndex = MainActivity.selectionSpinner.getSelectedItemPosition();
+                clickIntent.putExtra("filterString",filterString);
+                clickIntent.putExtra("filterIndex", filterIndex);
+            }
             clickIntent.setData(Uri.parse(clickIntent.toUri(Intent.URI_INTENT_SCHEME)));
             PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
             rv.setPendingIntentTemplate(R.id.stack_view, viewPendingIntent);
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        mlaunch = true;
     }
 
 }

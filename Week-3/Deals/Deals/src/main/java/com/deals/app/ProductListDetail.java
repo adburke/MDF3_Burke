@@ -49,7 +49,6 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
                 filterIndex = incomingData.getInt("filterIndex");
                 Log.i("filterIndex", String.valueOf(filterIndex));
                 filterString = incomingData.getString("filterString");
-                Log.i("filterString", filterString);
             } else {
                 productIndex = incomingData.getInt("index");
                 Log.i("productIndex", String.valueOf(productIndex));

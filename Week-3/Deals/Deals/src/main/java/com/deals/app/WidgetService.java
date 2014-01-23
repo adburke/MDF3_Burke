@@ -77,7 +77,6 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public RemoteViews getViewAt(int position) {
-        // position will always range from 0 to getCount() - 1.
 
         // We construct a remote views item based on our widget item xml file, and set the
         // text based on the position.

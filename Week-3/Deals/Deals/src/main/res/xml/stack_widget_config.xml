@@ -17,5 +17,6 @@
     android:updatePeriodMillis="3600000"
     android:previewImage="@drawable/deals_icon"
     android:initialLayout="@layout/stack_layout"
-    android:autoAdvanceViewId="@id/stack_view">
+    android:autoAdvanceViewId="@id/stack_view"
+    android:resizeMode="horizontal|vertical">
 </appwidget-provider>
