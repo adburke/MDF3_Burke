@@ -15,10 +15,12 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WidgetService extends RemoteViewsService{
@@ -31,6 +33,7 @@ public class WidgetService extends RemoteViewsService{
 class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final int mCount = 10;
     private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
+    //private ArrayList<HashMap<String, String>> mWidgetItems = new ArrayList<HashMap<String, String>>();
     private Context mContext;
     private int mAppWidgetId;
 
@@ -67,6 +70,7 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
         // from the network, etc., it is ok to do it here, synchronously. The widget will remain
         // in its current state while work is being done here, so you don't need to worry about
         // locking up the widget.
+        Log.i("WidgetService", "onDataSetChanged FIRED!");
     }
 
     @Override
@@ -78,6 +82,7 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getCount() {
+        //return mWidgetItems.size();
         return mCount;
     }
 

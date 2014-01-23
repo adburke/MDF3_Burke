@@ -13,6 +13,8 @@ package com.deals.app;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -229,6 +231,11 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
                     cursor.moveToNext();
 
                     productList.add(listMap);
+
+                    //
+                    AppWidgetManager awm = AppWidgetManager.getInstance(mContext);
+                    awm.notifyAppWidgetViewDataChanged(awm.getAppWidgetIds(new ComponentName(mContext,
+                            WidgetProvider.class)), R.id.stack_view);
 
                 }
             }

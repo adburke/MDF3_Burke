@@ -11,6 +11,7 @@
 package com.deals.app;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -41,21 +42,28 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
         // Capture incoming data
         Bundle incomingData = getIntent().getExtras();
         if (incomingData != null) {
-            productIndex = incomingData.getInt("index");
-            Log.i("productIndex", String.valueOf(productIndex));
-            filterIndex = incomingData.getInt("filterIndex");
-            Log.i("filterIndex", String.valueOf(filterIndex));
-            filterString = incomingData.getString("filterString");
-            Log.i("filterString", filterString);
-
-            // Create URI for product call to capture data
-            if (filterIndex == 0) {
-                productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex);
-                productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex;
+            if (incomingData.getBoolean("widget")) {
+                int appWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+                productIndex = getIntent().getIntExtra(WidgetProvider.EXTRA_ITEM, 0);
+                Log.i("ProductDetail", "Launched from widget! INDEX= " + productIndex);
             } else {
-                productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex);
-                productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex;
+                productIndex = incomingData.getInt("index");
+                Log.i("productIndex", String.valueOf(productIndex));
+                filterIndex = incomingData.getInt("filterIndex");
+                Log.i("filterIndex", String.valueOf(filterIndex));
+                filterString = incomingData.getString("filterString");
+                Log.i("filterString", filterString);
+
+                // Create URI for product call to capture data
+                if (filterIndex == 0) {
+                    productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex);
+                    productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/" + productIndex;
+                } else {
+                    productUri = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex);
+                    productUriString = "content://" + CollectionProvider.AUTHORITY + "/items/type/" + filterString + "/" + productIndex;
+                }
             }
+
         }
 
         // Check for valid cursor or saved data
@@ -71,7 +79,7 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
             if (fragment != null) {
                 fragment.updateProductDetails(productUri);
             }
-        } else {
+        } else if (savedInstanceState != null && !incomingData.getBoolean("widget")) {
             productUriString = savedInstanceState.getString("productUri");
             productUri = Uri.parse(productUriString);
             if (fragment != null) {

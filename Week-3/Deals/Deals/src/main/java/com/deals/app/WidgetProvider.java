@@ -77,14 +77,21 @@ public class WidgetProvider extends AppWidgetProvider {
             // cannot setup their own pending intents, instead, the collection as a whole can
             // setup a pending intent template, and the individual items can set a fillInIntent
             // to create unique before on an item to item basis.
-            Intent toastIntent = new Intent(context, WidgetProvider.class);
-            toastIntent.setAction(WidgetProvider.TOAST_ACTION);
-            toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
-
+//            Intent toastIntent = new Intent(context, WidgetProvider.class);
+//            toastIntent.setAction(WidgetProvider.TOAST_ACTION);
+//            toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+//            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+//            PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,
+//                    PendingIntent.FLAG_UPDATE_CURRENT);
+//            rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
+//
+//            appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
+            Intent clickIntent = new Intent(context, ProductListDetail.class);
+            clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            clickIntent.putExtra("widget", true);
+            clickIntent.setData(Uri.parse(clickIntent.toUri(Intent.URI_INTENT_SCHEME)));
+            PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
+            rv.setPendingIntentTemplate(R.id.stack_view, viewPendingIntent);
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
