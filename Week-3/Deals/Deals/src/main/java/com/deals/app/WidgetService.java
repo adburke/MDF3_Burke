@@ -31,9 +31,9 @@ public class WidgetService extends RemoteViewsService{
 }
 
 class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
-    private static final int mCount = 10;
-    private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
-    //private ArrayList<HashMap<String, String>> mWidgetItems = new ArrayList<HashMap<String, String>>();
+    //private static final int mCount = 10;
+    //private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
+    private ArrayList<HashMap<String, String>> mWidgetItems = new ArrayList<HashMap<String, String>>();
     private Context mContext;
     private int mAppWidgetId;
 
@@ -48,9 +48,9 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
         // In onCreate() you setup any connections / cursors to your data source. Heavy lifting,
         // for example downloading or creating content etc, should be deferred to onDataSetChanged()
         // or getViewAt(). Taking more than 20 seconds in this call will result in an ANR.
-        for (int i = 0; i < mCount; i++) {
-            mWidgetItems.add(new WidgetItem(i + "!"));
-        }
+//        for (int i = 0; i < mCount; i++) {
+//            mWidgetItems.add(new WidgetItem(i + "!"));
+//        }
 
         // We sleep for 3 seconds here to show how the empty view appears in the interim.
         // The empty view is set in the StackWidgetProvider and should be a sibling of the
@@ -71,6 +71,7 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
         // in its current state while work is being done here, so you don't need to worry about
         // locking up the widget.
         Log.i("WidgetService", "onDataSetChanged FIRED!");
+        mWidgetItems = MainActivity.productList;
     }
 
     @Override
@@ -82,8 +83,11 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        //return mWidgetItems.size();
-        return mCount;
+        if (mWidgetItems != null) {
+            return mWidgetItems.size();
+        }
+        //return mCount;
+        return 4;
     }
 
     @Override
@@ -93,7 +97,9 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
         // We construct a remote views item based on our widget item xml file, and set the
         // text based on the position.
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.stack_item);
-        rv.setTextViewText(R.id.stack_item, mWidgetItems.get(position).text);
+        if (mWidgetItems != null) {
+            rv.setTextViewText(R.id.stack_item, mWidgetItems.get(position).get("productPrice"));
+        }
 
         // Next, we set a fill-intent which will be used to fill-in the pending intent template
         // which is set on the collection view in StackWidgetProvider.

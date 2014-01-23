@@ -20,7 +20,7 @@
         android:layout_height="120dp"
         android:gravity="center"
         android:background="@drawable/gplaypatter_repeating"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="44sp" />
 </LinearLayout>

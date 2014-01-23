@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
     public static ListView resultsList;
 
     // ArrayList of hashmaps for listview
-    public ArrayList<HashMap<String, String>> productList;
+    public static ArrayList<HashMap<String, String>> productList;
 
 
     @Override
@@ -81,6 +81,7 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
 
         // Saved instance string for ProductDetail frag
         productUriString = null;
+        productList = null;
 
         selectionSpinner = (Spinner)findViewById(R.id.filterSpinner);
         queryAllBtn = (Button)findViewById(R.id.showAllBtn);
@@ -232,7 +233,7 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
 
                     productList.add(listMap);
 
-                    //
+                    // Prompts the WidgetProvider to update the widget data set
                     AppWidgetManager awm = AppWidgetManager.getInstance(mContext);
                     awm.notifyAppWidgetViewDataChanged(awm.getAppWidgetIds(new ComponentName(mContext,
                             WidgetProvider.class)), R.id.stack_view);
