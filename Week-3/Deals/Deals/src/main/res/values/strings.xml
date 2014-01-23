@@ -37,5 +37,6 @@
     </string-array>
 
     <string name="title_activity_product_list_detail">ProductListDetail</string>
+    <string name="empty_view_text">empty!</string>
 
 </resources>

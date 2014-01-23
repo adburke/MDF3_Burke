@@ -11,5 +11,20 @@
 package com.deals.app;
 
 
-public class WidgetConfigActivity {
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+
+public class WidgetConfigActivity extends Activity implements View.OnClickListener {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.browserfrag);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }
