@@ -44,13 +44,13 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-        if (intent.getAction().equals(TOAST_ACTION)) {
-            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-            int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
-            Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
-        }
+//        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+//        if (intent.getAction().equals(TOAST_ACTION)) {
+//            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+//                    AppWidgetManager.INVALID_APPWIDGET_ID);
+//            int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
+//            Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
+//        }
         super.onReceive(context, intent);
     }
 
@@ -61,7 +61,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
             // Here we setup the intent which points to the StackViewService which will
             // provide the views for this collection.
-            Intent intent = new Intent(context, StackWidgetService.class);
+            Intent intent = new Intent(context, WidgetService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             // When intents are compared, the extras are ignored, so we need to embed the extras
             // into the data so that the extras will not be ignored.
@@ -77,8 +77,8 @@ public class WidgetProvider extends AppWidgetProvider {
             // cannot setup their own pending intents, instead, the collection as a whole can
             // setup a pending intent template, and the individual items can set a fillInIntent
             // to create unique before on an item to item basis.
-            Intent toastIntent = new Intent(context, StackWidgetProvider.class);
-            toastIntent.setAction(StackWidgetProvider.TOAST_ACTION);
+            Intent toastIntent = new Intent(context, WidgetProvider.class);
+            toastIntent.setAction(WidgetProvider.TOAST_ACTION);
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,

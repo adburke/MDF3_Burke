@@ -37,7 +37,7 @@
 
         <provider
             android:name="com.deals.app.CollectionProvider"
-            android:authorities="com.adburke.java2_p1.CollectionProvider"
+            android:authorities="com.deals.app.CollectionProvider"
             android:exported="true" />
 
         <activity
@@ -46,7 +46,7 @@
         </activity>
 
         <!-- StackWidget Provider -->
-        <receiver android:name="StackWidgetProvider">
+        <receiver android:name=".WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -56,7 +56,7 @@
         </receiver>
 
         <!-- StackWidget Service -->
-        <service android:name="StackWidgetService"
+        <service android:name=".WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 
