@@ -50,6 +50,9 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
     // saved instance status
     Bundle savedInstanceState;
 
+    // Json service
+    Handler jsonServiceHandler;
+
     ProductDetailFragment viewer;
     public String productUriString;
 
@@ -80,6 +83,9 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
         mContext = this;
 
         writeStatus = false;
+
+        // Initialize current uri filter to null
+        uriFilter = null;
 
         // Saved instance string for ProductDetail frag
         productUriString = null;
@@ -128,7 +134,7 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
             }
         }
 
-        Handler jsonServiceHandler = new Handler() {
+        jsonServiceHandler = new Handler() {
 
             @Override
             public void handleMessage(Message msg) {
@@ -189,6 +195,12 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
+
+            Messenger jsonServiceMessenger = new Messenger(jsonServiceHandler);
+            Intent startJsonDataIntent = new Intent(this, JsonDataService.class);
+            startJsonDataIntent.putExtra(JsonDataService.MESSENGER_KEY, jsonServiceMessenger);
+            startService(startJsonDataIntent);
+
             return true;
         } else if (id == R.id.action_info) {
             return true;
@@ -290,7 +302,6 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
 
             Log.i("SPINNER SELECTION", selectionSpinner.getItemAtPosition(position).toString());
 
-            uriFilter = null;
             // Create uri to pass to onListUpdate based on the selection
             uriFilter = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + selection);
             onListUpdate(uriFilter);
