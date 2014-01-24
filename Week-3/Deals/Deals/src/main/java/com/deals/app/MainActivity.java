@@ -68,6 +68,8 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
     // ArrayList of hashmaps for listview
     public static ArrayList<HashMap<String, String>> productList;
 
+    // Current filter URI
+    public Uri uriFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +188,9 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            return true;
+        } else if (id == R.id.action_info) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -286,7 +290,7 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
 
             Log.i("SPINNER SELECTION", selectionSpinner.getItemAtPosition(position).toString());
 
-            Uri uriFilter = null;
+            uriFilter = null;
             // Create uri to pass to onListUpdate based on the selection
             uriFilter = Uri.parse("content://" + CollectionProvider.AUTHORITY + "/items/type/" + selection);
             onListUpdate(uriFilter);

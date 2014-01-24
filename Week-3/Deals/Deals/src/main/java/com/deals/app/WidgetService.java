@@ -82,7 +82,8 @@ class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
         // text based on the position.
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.stack_item);
         if (mWidgetItems != null) {
-            rv.setTextViewText(R.id.stack_item, mWidgetItems.get(position).get("productPrice"));
+            rv.setTextViewText(R.id.stack_item_price, "$" + mWidgetItems.get(position).get("productPrice"));
+            rv.setTextViewText(R.id.stack_item_name, mWidgetItems.get(position).get("productName"));
         }
 
         // Next, we set a fill-intent which will be used to fill-in the pending intent template

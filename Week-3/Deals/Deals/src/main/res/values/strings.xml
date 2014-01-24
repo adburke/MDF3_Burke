@@ -16,7 +16,10 @@
     <string name="detail_screen_title">Product Details</string>
     <string name="all_btn">Show All</string>
     <string name="main_text">Choose a search filter:</string>
-    <string name="action_settings">Settings</string>
+
+    <!-- Menu Strings -->
+    <string name="action_info">Info</string>
+
     <string name="webBtn">View Web</string>
 
     <string-array name="selection_array">
