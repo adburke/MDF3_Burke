@@ -22,7 +22,7 @@
 
     <!-- App Info Strings -->
     <string name="dev_info">Created by: Aaron Burke</string>
-    <string name="app_info">App Demos: JSON, API Data Service, File writing/reading, Widget, Fragments, Content Provider</string>
+    <string name="app_info">The App Demos: JSON, API Data Service, File writing/reading, Widget, Fragments, Content Provider</string>
     <string name="info_screen_title">Application Information</string>
 
     <string name="webBtn">View Web</string>

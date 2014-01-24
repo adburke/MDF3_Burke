@@ -5,6 +5,8 @@
  *
  * Author:		aaronburke
  *
+ * Purpose:     This class extends the AppWidgetProvider. It provides intent data for the widget views.
+ *
  * Date:		 	1 22, 2014
  */
 

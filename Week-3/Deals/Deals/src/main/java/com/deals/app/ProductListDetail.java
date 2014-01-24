@@ -5,6 +5,8 @@
  *
  * Author:		aaronburke
  *
+ * Purpose:     Displays a detailed view of a product selected from the MainActivity
+ *
  * Date:		 	1 21, 2014
  */
 

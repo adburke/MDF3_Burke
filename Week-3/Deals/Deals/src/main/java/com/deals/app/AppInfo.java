@@ -5,6 +5,8 @@
  *
  * Author:		aaronburke
  *
+ * Purpose:     Application Info Page
+ *
  * Date:		 	1 23, 2014
  */
 

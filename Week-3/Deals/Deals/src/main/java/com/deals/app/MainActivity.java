@@ -5,6 +5,8 @@
  *
  * Author:		aaronburke
  *
+ * Purpose:     Main Activity displays list of products and calls the data service
+ *
  * Date:		 	1 21, 2014
  */
 
@@ -195,6 +197,9 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
             Intent startJsonDataIntent = new Intent(this, JsonDataService.class);
             startJsonDataIntent.putExtra(JsonDataService.MESSENGER_KEY, jsonServiceMessenger);
             startService(startJsonDataIntent);
+
+            Toast toast = Toast.makeText(mContext, "Refreshing Product Data", Toast.LENGTH_SHORT);
+            toast.show();
 
             return true;
         } else if (id == R.id.action_info) {
