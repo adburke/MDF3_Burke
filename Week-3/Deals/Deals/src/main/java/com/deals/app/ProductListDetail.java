@@ -10,6 +10,7 @@
 
 package com.deals.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -38,6 +39,12 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.productdetailfrag);
+
+        ActionBar actionBar = getActionBar();
+        // Creates back action on icon
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         ProductDetailFragment fragment = (ProductDetailFragment) getFragmentManager().findFragmentById(R.id.productdetail_fragment);
 
@@ -114,6 +121,10 @@ public class ProductListDetail extends Activity implements ProductDetailFragment
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_info) {
+
+            Intent intent = new Intent(this, AppInfo.class);
+            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);

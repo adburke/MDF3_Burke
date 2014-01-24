@@ -10,9 +10,8 @@
 
 package com.deals.app;
 
-import android.app.Activity;
 import android.app.ActionBar;
-import android.app.Fragment;
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,12 +24,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -203,6 +198,10 @@ public class MainActivity extends Activity implements BrowserFragment.BrowserLis
 
             return true;
         } else if (id == R.id.action_info) {
+
+            Intent intent = new Intent(this, AppInfo.class);
+            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);

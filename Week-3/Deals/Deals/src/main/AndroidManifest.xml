@@ -29,6 +29,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <service
@@ -42,7 +43,14 @@
 
         <activity
             android:name="com.deals.app.ProductListDetail"
-            android:label="@string/detail_screen_title" >
+            android:label="@string/detail_screen_title"
+            android:parentActivityName="com.deals.app.MainActivity" >
+        </activity>
+
+        <activity
+            android:name="com.deals.app.AppInfo"
+            android:label="@string/info_screen_title"
+            android:parentActivityName="com.deals.app.MainActivity" >
         </activity>
 
         <!-- StackWidget Provider -->
