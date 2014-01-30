@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
 
         contactWebView = (WebView) findViewById(R.id.contactWebView);
         contactWebView.loadUrl("file:///android_asset/form.html");
+        // .setBackgroundColor Has to come after .loadUrl to create a transparent webview background
         contactWebView.setBackgroundColor(0x00000000);
         // Enable JavaScript
         WebSettings webSettings = contactWebView.getSettings();
@@ -34,7 +36,7 @@ public class MainActivity extends Activity {
         contactWebView.addJavascriptInterface(new ContactAppInterface(this), "Android");
 
     }
-
+    // JavaScript interface class
     public class ContactAppInterface {
         Context mContext;
 
@@ -44,6 +46,9 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface
         public void saveContact(String name, String phone, String email, String address) {
+
+            Log.i("JavascriptInterface", "saveContact fired!");
+
             Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
             intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
 
