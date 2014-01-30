@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
 
         contactWebView = (WebView) findViewById(R.id.contactWebView);
         contactWebView.loadUrl("file:///android_asset/form.html");
+        contactWebView.setBackgroundColor(0x00000000);
         // Enable JavaScript
         WebSettings webSettings = contactWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);

@@ -1,5 +1,11 @@
+body, html {
+   background: transparent;
+   margin:0;
+   padding:0;
+}
+
 form {
-  max-width: 300px ;
+  max-width: 325px ;
   margin: 0 auto;
   background-color:rgba(72,72,72,0.4);
   padding: 15px 15px 25px 15px;
