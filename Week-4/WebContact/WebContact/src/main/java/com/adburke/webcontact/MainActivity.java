@@ -5,7 +5,6 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -39,8 +38,15 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface
         public void saveContact(String name, String phone, String email, String address) {
-            Intent intent = new Intent(Contacts.Intents.Insert.ACTION);
+            Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
             intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+
+            intent.putExtra(ContactsContract.Intents.Insert.NAME, name);
+            intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email);
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE, phone);
+            intent.putExtra(ContactsContract.Intents.Insert.POSTAL, address);
+
+            startActivity(intent);
         }
 
     }
