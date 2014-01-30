@@ -24,8 +24,13 @@ public class MainActivity extends Activity {
             actionBar.hide();
         }
 
+        contactWebView = (WebView) findViewById(R.id.contactWebView);
+        contactWebView.loadUrl("file:///android_asset/form.html");
+        // Enable JavaScript
         WebSettings webSettings = contactWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        // Binds the interface class to the javascript running in the WebView
+        contactWebView.addJavascriptInterface(new ContactAppInterface(this), "Android");
 
     }
 
