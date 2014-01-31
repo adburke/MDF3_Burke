@@ -17,11 +17,16 @@ form {
     position: relative;
 }
 .left-inner-addon input {
-    padding-left: 35px;    
+    padding-left: 35px;
+    color: black;
 }
 .left-inner-addon span {
     position: absolute;
-    padding: 15px 12px;
+    padding: 10px 12px;
     pointer-events: none;
 }
 
+.error {
+  color: white;
+  margin-bottom: 0;
+}
